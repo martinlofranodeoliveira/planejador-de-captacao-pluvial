@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "areaM2": 24,
+  "efficiencyPct": 80,
+  "capacityL": 400,
+  "initialL": 120,
+  "days": [
+    {
+      "rainMm": 0,
+      "demandL": 80
+    },
+    {
+      "rainMm": 12,
+      "demandL": 100
+    },
+    {
+      "rainMm": 24,
+      "demandL": 140
+    },
+    {
+      "rainMm": 0,
+      "demandL": 100
+    },
+    {
+      "rainMm": 1,
+      "demandL": 90
+    },
+    {
+      "rainMm": 0,
+      "demandL": 120
+    }
+  ]
+}

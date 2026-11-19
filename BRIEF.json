@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "templateId": "planejador-de-captacao-pluvial",
+  "title": "Planejador de captação pluvial",
+  "purpose": "Permitir que escolas e hortas comunitárias comparem, dia a dia, o uso de água de chuva com volumes fictícios em uma cisterna.",
+  "audience": "Educação ambiental e planejamento comunitário",
+  "workflow": ["Abrir uma série fictícia de chuva e demanda", "Ajustar área, eficiência, capacidade e volume inicial", "Simular o balanço", "Comparar atendimento, extravasamento e déficit e exportar JSON"],
+  "deliverables": ["Aplicação de navegador em português", "Motor JavaScript puro e determinístico", "Contrato de unidades físicas e arredondamento", "Exemplo e testes offline"],
+  "semantics": "Por dia, a água captada entra na cisterna, o excedente à capacidade extravasa e a demanda é atendida com a água armazenada. A sobra vira o estoque do dia seguinte. São exibidos captação total, atendimento, déficit, extravasamento e estoque final.",
+  "constraints": ["Somente cenários fictícios digitados localmente", "Sem sensores, clima ao vivo ou serviços externos", "Simulação educativa; dimensionamento executivo, potabilidade e previsão meteorológica ficam fora do escopo"],
+  "license": "MIT"
+}

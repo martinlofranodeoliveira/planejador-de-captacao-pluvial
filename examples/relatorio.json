@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "rows": [
+    {
+      "day": 1,
+      "capturedL": 0,
+      "overflowL": 0,
+      "servedL": 80,
+      "shortageL": 0,
+      "storedL": 40
+    },
+    {
+      "day": 2,
+      "capturedL": 230,
+      "overflowL": 0,
+      "servedL": 100,
+      "shortageL": 0,
+      "storedL": 170
+    },
+    {
+      "day": 3,
+      "capturedL": 460,
+      "overflowL": 230,
+      "servedL": 140,
+      "shortageL": 0,
+      "storedL": 260
+    },
+    {
+      "day": 4,
+      "capturedL": 0,
+      "overflowL": 0,
+      "servedL": 100,
+      "shortageL": 0,
+      "storedL": 160
+    },
+    {
+      "day": 5,
+      "capturedL": 19,
+      "overflowL": 0,
+      "servedL": 90,
+      "shortageL": 0,
+      "storedL": 89
+    },
+    {
+      "day": 6,
+      "capturedL": 0,
+      "overflowL": 0,
+      "servedL": 89,
+      "shortageL": 31,
+      "storedL": 0
+    }
+  ],
+  "summary": {
+    "capturedL": 709,
+    "servedL": 599,
+    "shortageL": 31,
+    "overflowL": 230,
+    "finalL": 0
+  }
+}

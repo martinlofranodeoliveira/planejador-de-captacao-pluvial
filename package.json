@@ -1,0 +1,11 @@
+{
+  "name": "planejador-de-captacao-pluvial",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "python3 -S scripts/checks-offline.py",
+    "build": "node scripts/build.mjs"
+  }
+}

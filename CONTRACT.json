@@ -1,0 +1,45 @@
+{
+  "template": "planejador-de-captacao-pluvial",
+  "revision": 1,
+  "input": {
+    "schemaVersion": 1,
+    "areaM2": 10,
+    "efficiencyPct": 75,
+    "capacityL": 60,
+    "initialL": 5,
+    "days": [
+      {
+        "rainMm": 8,
+        "demandL": 20
+      }
+    ]
+  },
+  "output": {
+    "schemaVersion": 1,
+    "rows": [
+      {
+        "day": 1,
+        "capturedL": 60,
+        "overflowL": 5,
+        "servedL": 20,
+        "shortageL": 0,
+        "storedL": 40
+      }
+    ],
+    "summary": {
+      "capturedL": 60,
+      "servedL": 20,
+      "shortageL": 0,
+      "overflowL": 5,
+      "finalL": 40
+    }
+  },
+  "rules": [
+    "Export exactly one pure JavaScript function simulate(document) in src/engine.js. Never change the input. Return fresh JSON of the precise specified shape.",
+    "Every object has exactly the documented own keys. Arrays must be arrays; input root is a non-null ordinary JSON object, schemaVersion is the integer 1. Never coerce user types. Throw TypeError or RangeError for any invalid document.",
+    "Preserve original input order in all result arrays. The empty collection is valid.",
+    "Use only integer inputs. areaM2: 1..10000; efficiencyPct: 0..100; capacityL: 1..1000000; initialL: 0..capacityL; days: length 0..366. Each rainMm is 0..1000 and each demandL 0..1000000.",
+    "For each day number starting at 1 calculate capturedL=floor(areaM2*rainMm*efficiencyPct/100); discard fractional liters independently each day. Add previous storedL (initialL for day 1), then clip at capacityL and record overflowL. Then serve min(demandL, clipped storage), report unmet demand as shortageL and carry remaining liters as storedL.",
+    "summary sums the four flow fields over all days. finalL is the final storage; empty days have zero flows and finalL equal initialL."
+  ]
+}

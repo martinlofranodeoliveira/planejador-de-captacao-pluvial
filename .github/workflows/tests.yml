@@ -1,0 +1,24 @@
+name: Testar Planejador de captação pluvial offline
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # approved controller parent
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # approved controller parent
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.22.1'
+      - name: Preparar isolamento na VM efêmera
+        run: bash scripts/ci-bootstrap.sh
+      - name: Testar fonte somente leitura e build estático sem rede ou credenciais
+        run: python3 -S scripts/checks-offline.py
