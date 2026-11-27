@@ -1,43 +1,176 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#123b3b">
-  <title>Caderno pluvial · Planejador de captação</title>
-  <link rel="stylesheet" href="styles.css"><script type="module" src="src/app.js"></script>
-</head>
-<body>
-<header><div class="wrap top"><a class="brand" href="./"><i class="mark" aria-hidden="true"></i>Caderno pluvial</a><span>Educação ambiental</span></div></header>
-<main class="wrap">
-  <div class="intro"><div><p class="section-label">Planejador de captação pluvial</p><h1>Balanço da cisterna</h1><p>Acompanhe a chuva que vira reserva e a água que atende à horta, dia a dia.</p></div><button id="edit" aria-controls="editor" aria-expanded="false">Editar cenário</button></div>
-  <section id="editor" class="editor" hidden aria-labelledby="edit-title"><h2 id="edit-title">Editar cenário</h2>
-    <form id="form"><fieldset id="parameters"><legend>Cisterna</legend>
-      <label>Área de captação (m²)<input data-field="areaM2" type="number" min="1" max="10000" required></label>
-      <label>Eficiência (%)<input data-field="efficiencyPct" type="number" min="0" max="100" required></label>
-      <label>Capacidade (L)<input data-field="capacityL" type="number" min="1" max="1000000" required></label>
-      <label>Estoque inicial (L)<input data-field="initialL" type="number" min="0" max="1000000" required></label>
-    </fieldset>
-    <fieldset class="days"><legend>Série diária</legend><div id="days"></div><button id="add" type="button">Adicionar dia</button></fieldset>
-    <div class="button-group"><button class="primary" type="submit">Simular cenário</button><button id="restore" type="button">Restaurar exemplo</button></div>
-    </form>
-  </section>
-  <p role="status" id="status"></p>
-  <article id="report" hidden>
-    <div class="report-head"><div><p class="section-label" id="report-kind"></p><h2 id="scenario-name"></h2></div><button id="export">Exportar relatório</button></div>
-    <div class="dashboard">
-      <section class="reservoir" aria-labelledby="tank-title">
-        <div class="panel-head"><h3 id="tank-title">Reserva no fim do dia</h3><label for="day-choice" class="sr">Escolher dia</label><select id="day-choice"></select></div>
-        <div class="diagram">
-          <div class="reservoir-volume"><span id="stock">—</span> <small>L</small></div>
-          <div class="tank"><div class="fill" id="fill"></div><div class="marks" aria-hidden="true"></div></div>
-          <div class="tank-caption"><span id="percent"></span><span id="capacity"></span></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#062842" />
+    <title>Caderno pluvial · Planejador de captação</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="src/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#principal">Ir para o balanço</a>
+    <header>
+      <div class="wrap top">
+        <a class="brand" href="./"
+          ><i class="mark" aria-hidden="true"></i>Caderno pluvial</a
+        >
+        <nav aria-label="Navegação da aplicação">
+          <a href="#report">Balanço</a><a href="#ledger-title">Diário</a>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap" id="principal">
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-copy">
+          <p class="section-label">Planejador de captação pluvial</p>
+          <h1 id="intro-title">Balanço da cisterna</h1>
+          <p>
+            Compare a chuva captada com a demanda da horta e confira a reserva
+            dia a dia.
+          </p>
+          <button id="edit" aria-controls="editor" aria-expanded="false">
+            Editar cenário
+          </button>
         </div>
-        <p id="day-description"></p>
+        <img
+          class="cover"
+          src="src/captacao-editorial.webp"
+          alt=""
+          width="1040"
+          height="465"
+        />
       </section>
-      <section class="period" aria-labelledby="period-title"><div class="panel-head"><h3 id="period-title">No período</h3><span id="duration"></span></div><dl id="totals"></dl></section>
-    </div>
-    <section class="ledger" aria-labelledby="ledger-title"><h3 id="ledger-title">Diário da horta</h3><div class="table-scroll" tabindex="0" role="region" aria-label="Balanço diário em litros e chuva em milímetros"><table><thead><tr><th scope="col">Dia</th><th scope="col">Chuva <small>mm</small></th><th scope="col">Demanda <small>L</small></th><th scope="col">Captação <small>L</small></th><th scope="col">Atendido <small>L</small></th><th scope="col">Excesso <small>L</small></th><th scope="col">Déficit <small>L</small></th><th scope="col">Estoque <small>L</small></th></tr></thead><tbody id="ledger-body"></tbody></table></div></section>
-  </article>
-  <footer>Séries fictícias para uso educativo. Todos os dados são processados neste navegador.</footer>
-</main>
-</body></html>
+      <section id="editor" class="editor" hidden aria-labelledby="edit-title">
+        <h2 id="edit-title">Editar cenário</h2>
+        <form id="form">
+          <fieldset id="parameters">
+            <legend>Cisterna</legend>
+            <label
+              >Área de captação (m²)<input
+                data-field="areaM2"
+                type="number"
+                min="1"
+                max="10000"
+                required
+            /></label>
+            <label
+              >Eficiência (%)<input
+                data-field="efficiencyPct"
+                type="number"
+                min="0"
+                max="100"
+                required
+            /></label>
+            <label
+              >Capacidade (L)<input
+                data-field="capacityL"
+                type="number"
+                min="1"
+                max="1000000"
+                required
+            /></label>
+            <label
+              >Estoque inicial (L)<input
+                data-field="initialL"
+                type="number"
+                min="0"
+                max="1000000"
+                required
+            /></label>
+          </fieldset>
+          <fieldset class="days">
+            <legend>Série diária</legend>
+            <div id="days"></div>
+            <button id="add" type="button">Adicionar dia</button>
+          </fieldset>
+          <div class="button-group">
+            <button class="primary" type="submit">Simular cenário</button
+            ><button id="restore" type="button">Restaurar exemplo</button>
+          </div>
+        </form>
+      </section>
+      <p role="status" id="status"></p>
+      <article id="report" hidden>
+        <div class="report-head">
+          <div>
+            <p class="section-label" id="report-kind"></p>
+            <h2 id="scenario-name"></h2>
+          </div>
+          <button id="export">Exportar relatório</button>
+        </div>
+        <div class="dashboard">
+          <section class="reservoir" aria-labelledby="tank-title">
+            <div class="panel-head">
+              <h3 id="tank-title">Reserva no fim do dia</h3>
+              <label for="day-choice" class="sr">Escolher dia</label
+              ><select id="day-choice"></select>
+            </div>
+            <div class="diagram">
+              <div class="volume-field">
+                <div class="reservoir-volume">
+                  <span id="stock">—</span> <small>L</small>
+                </div>
+                <span class="level-label" id="percent"></span>
+              </div>
+              <div class="gauge">
+                <span aria-hidden="true" class="gauge-scale"
+                  ><span>100%</span><span>50%</span><span>0%</span></span
+                >
+                <div class="tank" aria-hidden="true">
+                  <div class="fill" id="fill"></div>
+                  <div class="marks" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tank-caption" id="capacity"></div>
+            <p id="day-description"></p>
+          </section>
+          <section class="period" aria-labelledby="period-title">
+            <div class="panel-head">
+              <h3 id="period-title">No período</h3>
+              <span id="duration"></span>
+            </div>
+            <dl id="totals"></dl>
+          </section>
+        </div>
+        <section class="ledger" aria-labelledby="ledger-title">
+          <h3 id="ledger-title">Diário da horta</h3>
+          <div class="trend" hidden>
+            <h4>Reserva ao fim de cada dia</h4>
+            <div class="history-chart" id="history-chart" role="img"></div>
+            <div class="chart-range">
+              <span>Dia 1</span><span id="last-chart-day"></span>
+            </div>
+          </div>
+          <div
+            class="table-scroll"
+            tabindex="0"
+            role="region"
+            aria-label="Balanço diário em litros e chuva em milímetros"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Dia</th>
+                  <th scope="col">Chuva <small>mm</small></th>
+                  <th scope="col">Demanda <small>L</small></th>
+                  <th scope="col">Captação <small>L</small></th>
+                  <th scope="col">Atendido <small>L</small></th>
+                  <th scope="col">Excesso <small>L</small></th>
+                  <th scope="col">Déficit <small>L</small></th>
+                  <th scope="col">Estoque <small>L</small></th>
+                </tr>
+              </thead>
+              <tbody id="ledger-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </article>
+      <footer>
+        Séries fictícias para uso educativo. Todos os dados são processados
+        neste navegador.
+      </footer>
+    </main>
+  </body>
+</html>

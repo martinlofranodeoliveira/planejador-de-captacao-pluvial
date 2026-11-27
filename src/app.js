@@ -91,7 +91,8 @@ function displayDay() {
   const stored = row?.storedL ?? result.summary.finalL;
   el('stock').textContent = format.format(stored);
   const pct = 100 * stored / input.capacityL;
-  el('fill').style.transform = 'scaleX(' + pct / 100 + ')';
+  el('fill').style.height = pct + '%';
+  Array.from(el('history-chart').children).forEach((bar, i) => bar.classList.toggle('active', i === selected));
   el('percent').textContent = new Intl.NumberFormat('pt-BR', {maximumFractionDigits:1}).format(pct) + '% da capacidade';
   el('capacity').textContent = litres(input.capacityL) + ' de capacidade';
   el('day-description').textContent = row
@@ -126,6 +127,16 @@ function showReport(scenario, report, isExample, isDemo) {
     }
     return tr;
   });
+  const trend = el('history-chart');
+  const bars = result.rows.map(row => {
+    const bar = document.createElement('span');
+    bar.style.height = (100 * row.storedL / scenario.capacityL) + '%';
+    return bar;
+  });
+  trend.replaceChildren(...bars);
+  trend.parentElement.hidden = !bars.length;
+  trend.setAttribute('aria-label', 'Estoque diário em litros. Os valores de cada dia estão na tabela abaixo.');
+  el('last-chart-day').textContent = bars.length > 1 ? 'Dia ' + bars.length : '';
   el('ledger-body').replaceChildren(...tableRows);
   displayDay();
   el('report').hidden = false;
